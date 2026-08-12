@@ -4,6 +4,42 @@
     {
       "src": "server.js",
       "use": "@vercel/node"
+    },
+    {
+      "src": "index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "admin.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "style.css",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "admin.css",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "script.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "data.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "admin.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "firebase-config.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "metadata.json",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
@@ -12,15 +48,12 @@
       "dest": "/server.js"
     },
     {
-      "src": "/firebase-config.js",
-      "dest": "/server.js"
-    },
-    {
-      "handle": "filesystem"
+      "src": "/",
+      "dest": "/index.html"
     },
     {
       "src": "/(.*)",
-      "dest": "/index.html"
+      "dest": "/$1"
     }
   ]
 }
