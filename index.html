@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Professional Portfolio Website">
+    <title id="site-title">My Portfolio</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" id="site-favicon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👨‍💻</text></svg>">
+</head>
+
+<body>
+    <!-- Loading Screen -->
+    <div id="loader" class="loader-container">
+        <div class="loader-animation"></div>
+    </div>
+
+    <!-- Navigation -->
+    <header class="header" id="header">
+        <nav class="nav container">
+            <a href="#" class="nav-logo" id="nav-logo-text">Portfolio</a>
+
+            <div class="nav-menu" id="nav-menu">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#home" class="nav-link active">Home</a></li>
+                    <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
+                    <li class="nav-item"><a href="#skills" class="nav-link">Skills</a></li>
+                    <li class="nav-item"><a href="#experience" class="nav-link">Experience</a></li>
+                    <li class="nav-item"><a href="#projects" class="nav-link">Projects</a></li>
+                    <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
+                    <li class="nav-item"><a href="admin.html" class="btn btn-ghost"
+                            style="padding: 0.4rem 1rem; font-size: 0.9rem;">Admin <i class="fa-solid fa-lock"></i></a>
+                    </li>
+                </ul>
+                <div class="nav-close" id="nav-close">
+                    <i class="fa-solid fa-xmark"></i>
+                </div>
+            </div>
+
+            <div class="nav-actions">
+                <i class="fa-solid fa-moon theme-toggle" id="theme-button"></i>
+                <div class="nav-toggle" id="nav-toggle">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Home / Hero Section -->
+        <section class="home section" id="home">
+            <div class="home-container container grid">
+                <div class="home-content">
+                    <span class="home-subtitle" id="hero-greeting">Hello, I'm</span>
+                    <h1 class="home-title" id="hero-name">John Doe</h1>
+                    <h3 class="home-education">And I'm a <span class="typing-text" id="hero-typing"></span></h3>
+                    <p class="home-description" id="hero-description">
+                        I create premium web experiences with modern design and smooth animations.
+                    </p>
+                    <div class="home-social" id="hero-socials">
+                        <!-- Rendered by JS -->
+                    </div>
+                    <div class="home-buttons">
+                        <a href="#contact" class="btn">Contact Me <i class="fa-solid fa-paper-plane"></i></a>
+                        <a href="#" id="hero-resume-btn" class="btn btn-ghost" target="_blank">View Resume <i
+                                class="fa-solid fa-file-pdf"></i></a>
+                    </div>
+                </div>
+                <div class="home-img">
+                    <div class="img-wrapper">
+                        <img src="https://via.placeholder.com/400" alt="Profile" id="hero-img">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="about section" id="about">
+            <h2 class="section-title">About Me</h2>
+            <span class="section-subtitle">My Introduction</span>
+
+            <div class="about-container container grid">
+                <div class="about-img-box">
+                    <img src="https://via.placeholder.com/400" alt="About" id="about-img" class="about-img">
+                </div>
+
+                <div class="about-data">
+                    <p class="about-description" id="about-description">
+                        I am a passionate developer...
+                    </p>
+
+                    <div class="about-info" id="about-info-cards">
+                        <!-- Stats injected via JS -->
+                    </div>
+
+                    <a href="#" id="about-download-btn" class="btn" download>Download Resume <i
+                            class="fa-solid fa-download"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section class="skills section" id="skills">
+            <h2 class="section-title">My Skills</h2>
+            <span class="section-subtitle">Technical level</span>
+
+            <div class="skills-container container grid" id="skills-container">
+                <!-- Skills injected by JS -->
+            </div>
+        </section>
+
+        <!-- Experience & Education -->
+        <section class="timeline section" id="experience">
+            <h2 class="section-title">Journey</h2>
+            <span class="section-subtitle">My Experience & Education</span>
+
+            <div class="timeline-container container">
+                <div class="timeline-tabs">
+                    <div class="timeline-button active" data-target="#exp-content">
+                        <i class="fa-solid fa-briefcase"></i> Experience
+                    </div>
+                    <div class="timeline-button" data-target="#edu-content">
+                        <i class="fa-solid fa-graduation-cap"></i> Education
+                    </div>
+                </div>
+
+                <div class="timeline-sections">
+                    <div class="timeline-content active" id="exp-content">
+                        <!-- Experience items JS -->
+                    </div>
+                    <div class="timeline-content" id="edu-content">
+                        <!-- Education items JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services -->
+        <section class="services section" id="services">
+            <h2 class="section-title">Services</h2>
+            <span class="section-subtitle">What I offer</span>
+
+            <div class="services-container container grid" id="services-container">
+                <!-- Services JS -->
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section class="projects section" id="projects">
+            <h2 class="section-title">Portfolio</h2>
+            <span class="section-subtitle">Most recent work</span>
+
+            <div class="projects-filters" id="projects-filters">
+                <span class="filter-item active" data-filter="all">All</span>
+                <!-- Dynamic filters JS -->
+            </div>
+
+            <div class="projects-container container grid" id="projects-container">
+                <!-- Projects JS -->
+            </div>
+        </section>
+
+        <!-- Project Modal -->
+        <div class="project-modal" id="project-modal">
+            <div class="modal-content">
+                <i class="fa-solid fa-xmark modal-close" id="modal-close"></i>
+                <div id="modal-body"></div>
+            </div>
+        </div>
+
+        <!-- Achievements & Certificates -->
+        <section class="achievements section" id="achievements">
+            <h2 class="section-title">Achievements</h2>
+            <span class="section-subtitle">Certifications & Awards</span>
+
+            <div class="achievements-container container grid" id="achievements-container">
+                <!-- Achievements JS -->
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact section" id="contact">
+            <h2 class="section-title">Contact Me</h2>
+            <span class="section-subtitle">Get in touch</span>
+
+            <div class="contact-container container grid">
+                <div class="contact-info">
+                    <h3 class="contact-title">Talk to me</h3>
+                    <div id="contact-details-container">
+                        <!-- Contact Details JS -->
+                    </div>
+                    <div class="map-container" id="map-container">
+                        <!-- Maps iframe JS -->
+                    </div>
+                </div>
+
+                <div class="contact-form-box">
+                    <h3 class="contact-title">Write me a project</h3>
+                    <form action="" class="contact-form" id="contact-form">
+                        <div class="contact-form-group">
+                            <div class="contact-form-div">
+                                <label for="name" class="contact-form-tag">Name</label>
+                                <input type="text" id="name" placeholder="Insert your name" class="contact-form-input"
+                                    required>
+                            </div>
+                            <div class="contact-form-div">
+                                <label for="email" class="contact-form-tag">Mail</label>
+                                <input type="email" id="email" placeholder="Insert your email"
+                                    class="contact-form-input" required>
+                            </div>
+                        </div>
+                        <div class="contact-form-div">
+                            <label for="subject" class="contact-form-tag">Subject</label>
+                            <input type="text" id="subject" placeholder="Insert your subject" class="contact-form-input"
+                                required>
+                        </div>
+                        <div class="contact-form-div contact-form-area">
+                            <label for="message" class="contact-form-tag">Project</label>
+                            <textarea id="message" cols="30" rows="10" placeholder="Write your project details..."
+                                class="contact-form-input" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Send Message <i class="fa-solid fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container container">
+            <h1 class="footer-title" id="footer-title">Portfolio</h1>
+            <ul class="footer-list">
+                <li><a href="#about" class="footer-link">About</a></li>
+                <li><a href="#projects" class="footer-link">Projects</a></li>
+                <li><a href="#experience" class="footer-link">Experience</a></li>
+            </ul>
+            <div class="footer-social" id="footer-socials">
+                <!-- JS injected socials -->
+            </div>
+            <span class="footer-copy">&#169; <span id="current-year"></span> All rights reserved.</span>
+
+            <!-- Hidden Admin Access Link -->
+            <a href="admin.html" class="hidden-admin-link" aria-label="Admin Access"></a>
+        </div>
+    </footer>
+
+    <!-- Back to top -->
+    <a href="#" class="scrollup" id="scroll-up">
+        <i class="fa-solid fa-arrow-up scrollup-icon"></i>
+    </a>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container"></div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+
+    <script src="data.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

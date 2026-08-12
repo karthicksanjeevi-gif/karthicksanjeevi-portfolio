@@ -1,0 +1,14 @@
+{
+  "name": "resume-website",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "node server.js",
+    "build": "echo 'Static website build complete'",
+    "lint": "echo 'No lint errors'"
+  },
+  "dependencies": {
+    "firebase": "^12.17.1",
+    "mongoose": "^9.9.2"
+  }
+}

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Portfolio</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+    <!-- Login Screen -->
+    <div id="login-screen" class="login-container">
+        <div class="login-box">
+            <h2>Admin Login</h2>
+            <p>Enter your Firebase authorized email & password to access dashboard</p>
+            <form class="login-form" id="login-form">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="login-email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="admin-password" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="btn">Login</button>
+            </form>
+            <a href="index.html" class="btn btn-outline" style="margin-top: 1rem;"><i class="fa-solid fa-arrow-left"></i> Back to Portfolio</a>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard-screen" class="dashboard-container" style="display: none;">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Admin Panel</h2>
+            </div>
+            <ul class="sidebar-menu">
+                <li class="menu-item active" data-target="#panel-personal"><i class="fa-solid fa-user"></i> Personal
+                    Info</li>
+                <li class="menu-item" data-target="#panel-skills"><i class="fa-solid fa-code"></i> Skills</li>
+                <li class="menu-item" data-target="#panel-projects"><i class="fa-solid fa-briefcase"></i> Projects</li>
+                <li class="menu-item" data-target="#panel-experience"><i class="fa-solid fa-building"></i> Experience
+                </li>
+                <li class="menu-item" data-target="#panel-education"><i class="fa-solid fa-graduation-cap"></i>
+                    Education</li>
+                <li class="menu-item" data-target="#panel-services"><i class="fa-solid fa-handshake"></i> Services</li>
+                <li class="menu-item" data-target="#panel-achievements"><i class="fa-solid fa-trophy"></i> Achievements
+                </li>
+                <li class="menu-item" data-target="#panel-contact"><i class="fa-solid fa-envelope"></i> Contact &
+                    Socials</li>
+                <li class="menu-item" data-target="#panel-theme"><i class="fa-solid fa-palette"></i> Theme Settings</li>
+                <li class="menu-item" data-target="#panel-backup"><i class="fa-solid fa-database"></i> Backup & Restore
+                </li>
+            </ul>
+            <div class="sidebar-footer">
+                <button id="change-pass-btn" class="btn btn-outline" style="margin-bottom:8px;"><i class="fa-solid fa-key"></i> Change Password</button>
+                <button id="logout-btn" class="btn btn-outline"><i class="fa-solid fa-sign-out-alt"></i> Logout</button>
+                <a href="index.html" class="btn btn-outline"
+                    style="margin-top: 10px; display: block; text-align: center;"><i class="fa-solid fa-globe"></i> View
+                    Site</a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="topbar">
+                <div class="toggle-sidebar" id="toggle-sidebar"><i class="fa-solid fa-bars"></i></div>
+                <h3>Dashboard Overview</h3>
+                <div class="topbar-actions">
+                    <button id="save-all-btn" class="btn btn-primary"><i class="fa-solid fa-save"></i> Save All
+                        Changes</button>
+                </div>
+            </header>
+
+            <div class="panels-container">
+                <!-- Data Binding Logic: Forms will be populated by admin.js -->
+
+                <!-- Personal Panel -->
+                <div class="panel active" id="panel-personal">
+                    <h2>Personal Information</h2>
+                    <form id="form-personal" class="admin-form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Titles (Comma separated)</label>
+                                <input type="text" name="title" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Hero Description</label>
+                            <textarea name="description" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>About Me text</label>
+                            <textarea name="aboutMe" rows="4" required></textarea>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Profile Picture URL</label>
+                                <input type="text" name="profilePic" required>
+                                <label style="margin-top:0.5rem; font-size:0.8rem">Or Upload Image:</label>
+                                <input type="file" id="upload-profilePic" accept="image/*">
+                            </div>
+                            <div class="form-group">
+                                <label>About Picture URL</label>
+                                <input type="text" name="aboutPic" required>
+                                <label style="margin-top:0.5rem; font-size:0.8rem">Or Upload Image:</label>
+                                <input type="file" id="upload-aboutPic" accept="image/*">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Resume PDF Link</label>
+                            <input type="text" name="resumeLink" placeholder="URL to your resume">
+                            <label style="margin-top:0.5rem; font-size:0.8rem">Or Upload PDF:</label>
+                            <input type="file" id="upload-resume" accept="application/pdf">
+                        </div>
+
+                        <hr style="margin: 2rem 0; border: 0; border-top: 1px solid var(--border);">
+                        
+                        <div class="stats-section">
+                            <h3 style="margin-bottom: 0.5rem; color: var(--primary);">About Feature / Stat Cards</h3>
+                            <p class="panel-desc" style="margin-bottom: 1rem;">Customize the cards displayed under "About Me" on your portfolio (e.g., Experience, Projects, Support).</p>
+                            <div id="stats-editor-list" class="editor-list">
+                                <!-- Stat rows injected dynamically by admin.js -->
+                            </div>
+                            <button type="button" id="add-stat-btn" class="btn btn-outline" style="width: auto; margin-top: 0.5rem;"><i class="fa-solid fa-plus"></i> Add Feature Card</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- JSON Editor for complex array panels -->
+                <!-- Skills Panel -->
+                <div class="panel" id="panel-skills">
+                    <h2>Manage Skills</h2>
+                    <p class="panel-desc">Edit your skills directly in JSON format.</p>
+                    <textarea id="json-skills" class="json-editor" rows="20"></textarea>
+                </div>
+
+                <!-- Projects Panel -->
+                <div class="panel" id="panel-projects">
+                    <h2>Manage Projects</h2>
+                    <p class="panel-desc">Edit your projects array. Ensure keys match the template.</p>
+                    <textarea id="json-projects" class="json-editor" rows="20"></textarea>
+                </div>
+
+                <!-- Experience Panel -->
+                <div class="panel" id="panel-experience">
+                    <h2>Manage Experience</h2>
+                    <textarea id="json-experience" class="json-editor" rows="15"></textarea>
+                </div>
+
+                <!-- Education Panel -->
+                <div class="panel" id="panel-education">
+                    <h2>Manage Education</h2>
+                    <textarea id="json-education" class="json-editor" rows="15"></textarea>
+                </div>
+
+                <!-- Services Panel -->
+                <div class="panel" id="panel-services">
+                    <h2>Manage Services</h2>
+                    <textarea id="json-services" class="json-editor" rows="15"></textarea>
+                </div>
+
+                <!-- Achievements Panel -->
+                <div class="panel" id="panel-achievements">
+                    <h2>Manage Achievements</h2>
+                    <textarea id="json-achievements" class="json-editor" rows="15"></textarea>
+                </div>
+
+                <!-- Contact Panel -->
+                <div class="panel" id="panel-contact">
+                    <h2>Contact Information</h2>
+                    <form id="form-contact" class="admin-form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" name="email">
+                            </div>
+                            <div class="form-group">
+                                <label>Phone</label>
+                                <input type="text" name="phone">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Location Name</label>
+                            <input type="text" name="location">
+                        </div>
+                        <div class="form-group">
+                            <label>Location Link</label>
+                            <input type="text" name="mapLink" placeholder="https://maps.app.goo.gl/...">
+                        </div>
+                        <div class="form-group">
+                            <label>Full Address</label>
+                            <input type="text" name="address">
+                        </div>
+                        <div class="form-group">
+                            <label>Google Maps Iframe HTML</label>
+                            <textarea name="mapIframe" rows="3"></textarea>
+                        </div>
+                    </form>
+
+                    <h2 style="margin-top: 2rem;">Social Links</h2>
+                    <textarea id="json-socials" class="json-editor" rows="10"></textarea>
+                </div>
+
+                <!-- Theme Panel -->
+                <div class="panel" id="panel-theme">
+                    <h2>Theme Settings</h2>
+                    <form id="form-theme" class="admin-form">
+                        <div class="form-group">
+                            <label>Website Title</label>
+                            <input type="text" name="title">
+                        </div>
+                        <div class="form-group">
+                            <label>Favicon Emoji</label>
+                            <input type="text" name="favicon" placeholder="e.g. 👨‍💻">
+                        </div>
+                        <div class="form-group">
+                            <label>Primary Color Hue (0-360)</label>
+                            <input type="number" name="primaryColorHue" min="0" max="360">
+                            <small>e.g. 250 (Purple), 200 (Blue), 150 (Green), 0 (Red)</small>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Backup Panel -->
+                <div class="panel" id="panel-backup">
+                    <h2>Backup & Restore Data</h2>
+                    <p class="panel-desc">Export your data as a JSON file, or import an existing one. This is necessary
+                        to move your portfolio data to a different browser or device.</p>
+
+                    <div class="backup-actions">
+                        <button id="export-btn" class="btn btn-primary"><i class="fa-solid fa-download"></i> Export Data
+                            (JSON)</button>
+                        <div style="margin: 1.5rem 0; border-top: 1px solid #ddd; padding-top: 1.5rem;">
+                            <label style="display:block; margin-bottom: 0.5rem; font-weight: 500;">Import Data</label>
+                            <input type="file" id="import-file" accept=".json" class="form-control">
+                            <button id="import-btn" class="btn" style="margin-top: 10px;"><i
+                                    class="fa-solid fa-upload"></i> Import</button>
+                        </div>
+                        <div style="margin: 1.5rem 0; border-top: 1px solid #ddd; padding-top: 1.5rem;">
+                            <button id="reset-btn" class="btn btn-danger"><i
+                                    class="fa-solid fa-triangle-exclamation"></i> Factory Reset Data</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast-container"></div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+
+    <script src="data.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="admin.js"></script>
+</body>
+
+</html>
