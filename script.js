@@ -415,7 +415,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     window.addEventListener('scroll', scrollActive);
 
-    // Contact Form Submission (Gmail compose)
+    // Contact Form Submission (Gmail compose — user Gmail → admin Gmail)
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
         contactForm.addEventListener('submit', (e) => {
@@ -426,19 +426,34 @@ document.addEventListener('DOMContentLoaded', () => {
             const subjectEl = document.getElementById('subject');
             const messageEl = document.getElementById('message');
 
-            const name = nameEl ? nameEl.value : '';
-            const email = emailEl ? emailEl.value : '';
-            const subject = subjectEl ? subjectEl.value : '';
-            const message = messageEl ? messageEl.value : '';
+            const name = nameEl ? nameEl.value.trim() : '';
+            const email = emailEl ? emailEl.value.trim() : '';
+            const subject = subjectEl ? subjectEl.value.trim() : '';
+            const message = messageEl ? messageEl.value.trim() : '';
+
+            const isValidGmail = (address) => /^[a-zA-Z0-9._%+-]+@gmail\.com$/i.test(address);
+
+            if (!isValidGmail(email)) {
+                showToast("It is not a valid gmail", "error");
+                return;
+            }
             
-            const targetEmail = (portfolioData && portfolioData.contact) ? portfolioData.contact.email : 'contact@example.com';
+            const adminEmail = (portfolioData && portfolioData.contact && portfolioData.contact.email)
+                ? portfolioData.contact.email.trim()
+                : '';
+
+            if (!adminEmail) {
+                showToast("Admin email is not configured yet.", "error");
+                return;
+            }
             
-            const bodyText = `Name: ${name}\nEmail: ${email}\n\n${message}`;
-            const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(targetEmail)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`;
+            const bodyText = `Name: ${name}\n\n${message}`;
+            const composeUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(adminEmail)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`;
+            const gmailUrl = `https://accounts.google.com/AccountChooser?Email=${encodeURIComponent(email)}&continue=${encodeURIComponent(composeUrl)}`;
 
             window.open(gmailUrl, '_blank');
             
-            showToast("Opening Gmail to send your message...", "success");
+            showToast("Opening Gmail to send your message to admin...", "success");
             contactForm.reset();
         });
     }
