@@ -415,7 +415,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     window.addEventListener('scroll', scrollActive);
 
-    // Contact Form Submission (Mailto)
+    // Contact Form Submission (Gmail compose)
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
         contactForm.addEventListener('submit', (e) => {
@@ -433,11 +433,12 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const targetEmail = (portfolioData && portfolioData.contact) ? portfolioData.contact.email : 'contact@example.com';
             
-            const body = `Name: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0A${message}`;
+            const bodyText = `Name: ${name}\nEmail: ${email}\n\n${message}`;
+            const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(targetEmail)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`;
+
+            window.open(gmailUrl, '_blank');
             
-            window.location.href = `mailto:${targetEmail}?subject=${encodeURIComponent(subject)}&body=${body}`;
-            
-            showToast("Opening your email client...", "success");
+            showToast("Opening Gmail to send your message...", "success");
             contactForm.reset();
         });
     }
