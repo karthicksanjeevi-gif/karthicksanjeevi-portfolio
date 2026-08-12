@@ -313,11 +313,11 @@ document.addEventListener('DOMContentLoaded', () => {
             data.socials = readArrayEditor('json-socials') || JSON.parse(document.getElementById('json-socials').value || '[]');
 
             await setPortfolioData(data);
-            showToast("All changes saved successfully!", "success");
+            showToast("All changes saved to cloud! Visible on all devices.", "success");
             
         } catch (e) {
             console.error(e);
-            showToast("Error saving data! Check JSON format.", "error");
+            showToast("Error saving to cloud: " + (e.message || "Check MongoDB connection on Vercel."), "error");
         }
     }
 

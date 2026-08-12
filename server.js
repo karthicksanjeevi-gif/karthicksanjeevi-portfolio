@@ -36,24 +36,38 @@ const portfolioSchema = new mongoose.Schema({
 
 const Portfolio = mongoose.models.Portfolio || mongoose.model('Portfolio', portfolioSchema);
 
-let isMongoConnected = false;
+const MONGODB_URI = process.env.MONGODB_URI;
 
-if (process.env.MONGODB_URI) {
-  mongoose.connect(process.env.MONGODB_URI)
-    .then(() => {
-      console.log('Successfully connected to MongoDB database');
-      isMongoConnected = true;
-    })
-    .catch((err) => {
-      console.warn('MongoDB connection notice (using local file fallback until MongoDB is online):', err.message);
-    });
-} else {
-  console.info('MONGODB_URI environment variable not provided. Operating with local file backup storage.');
+// Reuse MongoDB connection across Vercel serverless invocations
+let cached = global.mongoose;
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null };
+}
+
+async function connectDB() {
+  if (!MONGODB_URI) return null;
+
+  if (cached.conn) return cached.conn;
+
+  if (!cached.promise) {
+    cached.promise = mongoose.connect(MONGODB_URI, {
+      bufferCommands: false,
+    }).then((mongooseInstance) => mongooseInstance);
+  }
+
+  try {
+    cached.conn = await cached.promise;
+    return cached.conn;
+  } catch (err) {
+    cached.promise = null;
+    throw err;
+  }
 }
 
 async function getPortfolioFromDb() {
-  if (isMongoConnected) {
+  if (MONGODB_URI) {
     try {
+      await connectDB();
       const doc = await Portfolio.findOne({ key: 'main' });
       if (doc && doc.data && Object.keys(doc.data).length > 0) {
         return doc.data;
@@ -62,29 +76,42 @@ async function getPortfolioFromDb() {
       console.error('Error fetching from MongoDB:', err.message);
     }
   }
+
   return readData();
 }
 
 async function savePortfolioToDb(data) {
-  writeData(data);
-  if (isMongoConnected) {
+  if (MONGODB_URI) {
     try {
+      await connectDB();
       await Portfolio.findOneAndUpdate(
         { key: 'main' },
         { data: data },
         { upsert: true, new: true }
       );
-      return true;
+      if (!process.env.VERCEL) {
+        writeData(data);
+      }
+      return { success: true, storage: 'mongodb' };
     } catch (err) {
       console.error('Error saving to MongoDB:', err.message);
-      return false;
+      if (!process.env.VERCEL) {
+        writeData(data);
+        return { success: true, storage: 'file' };
+      }
+      return { success: false, message: err.message };
     }
   }
-  return true;
+
+  writeData(data);
+  return { success: true, storage: 'file' };
 }
 
 function sendJson(res, statusCode, payload) {
-  res.writeHead(statusCode, { 'Content-Type': 'application/json' });
+  res.writeHead(statusCode, {
+    'Content-Type': 'application/json',
+    'Cache-Control': 'no-store, no-cache, must-revalidate'
+  });
   res.end(JSON.stringify(payload));
 }
 
@@ -178,8 +205,12 @@ try {
         req.on('end', async () => {
           try {
             const parsed = JSON.parse(body || '{}');
-            await savePortfolioToDb(parsed);
-            sendJson(res, 200, { success: true, mongoConnected: isMongoConnected });
+            const result = await savePortfolioToDb(parsed);
+            if (!result.success) {
+              sendJson(res, 500, { success: false, message: result.message || 'Failed to save to database' });
+              return;
+            }
+            sendJson(res, 200, { success: true, storage: result.storage });
           } catch (error) {
             sendJson(res, 400, { success: false, message: 'Invalid JSON payload' });
           }

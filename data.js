@@ -106,19 +106,12 @@ function normalizePortfolioData(data) {
 }
 
 async function getPortfolioData() {
-    let localData = null;
+    // Always load from server first so all devices see the same data
     try {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) {
-            localData = JSON.parse(saved);
-        }
-    } catch (e) {
-        console.warn('Error reading from localStorage:', e);
-    }
-
-    // Try fetching from MongoDB via backend server API
-    try {
-        const response = await fetch('/api/portfolio');
+        const response = await fetch(`/api/portfolio?t=${Date.now()}`, {
+            cache: 'no-store',
+            headers: { 'Cache-Control': 'no-cache' }
+        });
         if (response.ok) {
             const apiData = await response.json();
             if (apiData && Object.keys(apiData).length > 0) {
@@ -130,11 +123,16 @@ async function getPortfolioData() {
             }
         }
     } catch (e) {
-        console.info('Backend API unavailable. Operating in client cached mode.');
+        console.info('Backend API unavailable. Using local cache.');
     }
 
-    if (localData) {
-        return normalizePortfolioData(localData);
+    try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+            return normalizePortfolioData(JSON.parse(saved));
+        }
+    } catch (e) {
+        console.warn('Error reading from localStorage:', e);
     }
 
     return defaultData;
@@ -142,23 +140,32 @@ async function getPortfolioData() {
 
 async function setPortfolioData(data) {
     const normalized = normalizePortfolioData(data);
-    
-    // Always save to localStorage immediately
-    try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(normalized));
-    } catch (e) {
-        console.error('Error saving to localStorage:', e);
-    }
+    normalized._updatedAt = Date.now();
 
-    // Save to MongoDB database via backend server API
+    let cloudSaved = false;
     try {
-        await fetch('/api/portfolio', {
+        const response = await fetch('/api/portfolio', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(normalized)
         });
+        const result = await response.json().catch(() => ({}));
+        if (response.ok && result.success) {
+            cloudSaved = true;
+        } else {
+            throw new Error(result.message || 'Cloud save failed');
+        }
     } catch (e) {
-        console.warn('Could not sync with backend MongoDB server:', e);
+        console.error('Could not sync with backend:', e);
+        throw e;
+    }
+
+    if (cloudSaved) {
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(normalized));
+        } catch (e) {
+            console.error('Error saving to localStorage:', e);
+        }
     }
 
     return normalized;
