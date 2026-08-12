@@ -51,7 +51,7 @@ function renderSite() {
     }
 
     // 2. Personal Info
-    setElementText('nav-logo-text', (p.name || "Portfolio").split(' ')[0] || "Portfolio");
+    setElementText('nav-logo-text', p.name || "Portfolio");
     setElementText('hero-name', p.name || "Your Name");
     setElementText('hero-description', p.description || defaultData.personal.description);
     setElementSrc('hero-img', p.profilePic || defaultData.personal.profilePic);
