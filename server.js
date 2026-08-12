@@ -251,4 +251,10 @@ function startServer(port) {
   });
 }
 
-startServer(defaultPort);
+// Export handler for Vercel serverless
+module.exports = createHandler();
+
+// Start local dev server when run directly
+if (require.main === module) {
+  startServer(defaultPort);
+}
